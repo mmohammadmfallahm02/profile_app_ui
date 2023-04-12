@@ -16,74 +16,80 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoWidget() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset(
-                'assets/images/profile_image.png',
-                width: 60,
-                height: 60,
+  Widget _buildInfoWidget(ThemeData themeData) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(22, 40, 22, 0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  'assets/images/profile_image.png',
+                  width: 60,
+                  height: 60,
+                ),
               ),
-            ),
-            const SizedBox(
-              width: 16,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Brice Séraphin',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  const Text('Product& Product Designer'),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Row(
-                    children: const [
-                      Icon(
-                        Icons.location_on_outlined,
-                        size: 14,
-                      ),
-                      Text(
-                        'Paris, France',
-                      )
-                    ],
-                  ),
-                ],
+              const SizedBox(
+                width: 16,
               ),
-            ),
-            const Icon(Icons.favorite_outline)
-          ],
-        ),
-        const SizedBox(
-          height: 32,
-        ),
-        const Text(
-            'Enthusiastic young computer Geek, Freelance Designer in love of independence, I have alot of experience in graphical projects, and always give the best of myself to bring you to success.')
-      ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Brice Séraphin',
+                      style: themeData.textTheme.subtitle1,
+                    ),
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    const Text('Product& Product Designer'),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.location_on_outlined,
+                          color: themeData.textTheme.bodyText1!.color,
+                          size: 14,
+                        ),
+                        const SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          'Paris, France',
+                          style: themeData.textTheme.caption,
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Icon(Icons.favorite_outline, color: themeData.primaryColor)
+            ],
+          ),
+          const SizedBox(
+            height: 32,
+          ),
+          Text(
+            'Enthusiastic young computer Geek, Freelance Designer in love of independence, I have alot of experience in graphical projects, and always give the best of myself to bring you to success.',
+            style: themeData.textTheme.bodyText1,
+          )
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
     return Scaffold(
       appBar: _buildAppBarWidget(),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(22, 40, 22, 0),
-        child: Column(
-          children: [
-            _buildInfoWidget(),
-          ],
-        ),
+      body: Column(
+        children: [_buildInfoWidget(themeData), const Divider()],
       ),
     );
   }
