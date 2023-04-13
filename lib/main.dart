@@ -13,15 +13,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const Color surfaceColor = Color(0x0dffffff);
+    final Color primaryColor = Colors.pink.shade400;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: Colors.pink.shade400,
+        primaryColor: primaryColor,
         scaffoldBackgroundColor: const Color.fromARGB(255, 30, 30, 30),
         dividerColor: surfaceColor,
         appBarTheme: const AppBarTheme(backgroundColor: Colors.black),
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none),
+          filled: true,
+          fillColor: surfaceColor,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(primaryColor))),
         textTheme: GoogleFonts.latoTextTheme(
           const TextTheme(
               headline6: TextStyle(

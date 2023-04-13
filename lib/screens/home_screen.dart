@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,6 +10,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<SkillType> _skills = [];
+  static const double bodyMargin = 26.0;
 
   void updateSelectedListSkill(SkillType type) {
     _skills.contains(type) ? _skills.remove(type) : _skills.add(type);
@@ -30,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildInfoWidget(ThemeData themeData) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(22, 40, 22, 30),
+      padding: const EdgeInsets.fromLTRB(bodyMargin, 40, bodyMargin, 30),
       child: Column(
         children: [
           Row(
@@ -98,8 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildSkillsWidget(ThemeData themeData) {
     return ExpansionTile(
       trailing: const SizedBox(),
-      tilePadding: const EdgeInsets.only(left: 22, right: 22),
-      childrenPadding: const EdgeInsets.only(bottom: 30),
+      tilePadding: const EdgeInsets.only(left: bodyMargin, right: bodyMargin),
+      childrenPadding: const EdgeInsets.only(
+          bottom: 30, left: bodyMargin, right: bodyMargin),
       title: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -176,74 +179,58 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildLoginWidget(ThemeData themeData) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(bodyMargin, 20, bodyMargin, 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Personal information',
+            style: themeData.textTheme.bodyText2!
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          _buildTextField(label: 'Email', icon: Icons.alternate_email),
+          const SizedBox(
+            height: 8,
+          ),
+          _buildTextField(label: 'Password', icon: Icons.lock),
+          const SizedBox(
+            height: 12,
+          ),
+          ElevatedButton(
+              style: ButtonStyle(
+                  minimumSize:
+                      MaterialStateProperty.all(const Size.fromHeight(55))),
+              onPressed: () {},
+              child: const Text('Save'))
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextField({required String label, required IconData icon}) {
+    return TextField(
+      decoration: InputDecoration(labelText: label, prefixIcon: Icon(icon)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     return Scaffold(
       appBar: _buildAppBarWidget(),
-      body: Column(
-        children: [
-          _buildInfoWidget(themeData),
-          _buildSkillsWidget(themeData),
-        ],
-      ),
-    );
-  }
-}
-
-class SkillWidget extends StatelessWidget {
-  final String title;
-  final String imagePath;
-  final Color shadowColor;
-  final bool isActive;
-  final SkillType skillType;
-  final Function() onTap;
-  static const double radius = 12;
-
-  const SkillWidget({
-    Key? key,
-    required this.title,
-    required this.imagePath,
-    required this.shadowColor,
-    required this.isActive,
-    required this.skillType,
-    required this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    return InkWell(
-      borderRadius: BorderRadius.circular(radius),
-      onTap: onTap,
-      child: Container(
-        height: 110,
-        width: 110,
-        decoration: isActive
-            ? BoxDecoration(
-                color: themeData.dividerColor,
-                borderRadius: BorderRadius.circular(radius),
-              )
-            : null,
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Container(
-            decoration: isActive
-                ? BoxDecoration(boxShadow: [
-                    BoxShadow(
-                        color: shadowColor.withOpacity(0.5), blurRadius: 20)
-                  ])
-                : null,
-            child: Image.asset(
-              imagePath,
-              width: 40,
-              height: 40,
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(title)
-        ]),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _buildInfoWidget(themeData),
+            _buildSkillsWidget(themeData),
+            _buildLoginWidget(themeData)
+          ],
+        ),
       ),
     );
   }
