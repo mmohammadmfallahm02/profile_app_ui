@@ -1,10 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   final Function() toggleThemeMode;
-  const HomeScreen({super.key, required this.toggleThemeMode});
+  final Function(Language language) selectedLanguageChanged;
+  const HomeScreen(
+      {super.key,
+      required this.toggleThemeMode,
+      required this.selectedLanguageChanged});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -12,11 +17,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<SkillType> _skills = [];
+  Language _language = Language.en;
   static const double bodyMargin = 26.0;
 
-  void updateSelectedListSkill(SkillType type) {
+  void _updateSelectedListSkill(SkillType type) {
     _skills.contains(type) ? _skills.remove(type) : _skills.add(type);
     setState(() {});
+  }
+
+  void _updatedSelectedLanguage(Language language) {
+    widget.selectedLanguageChanged(language);
+    setState(() {
+      _language = language;
+    });
   }
 
   AppBar _buildAppBarWidget() {
@@ -113,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Skills',
+            appLocalizations.skills,
             style: TextStyle(color: themeData.textTheme.subtitle1!.color),
           ),
           Icon(
@@ -136,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
               isActive: _skills.contains(SkillType.photoShop),
               skillType: SkillType.photoShop,
               onTap: () {
-                updateSelectedListSkill(SkillType.photoShop);
+                _updateSelectedListSkill(SkillType.photoShop);
               },
             ),
             SkillWidget(
@@ -146,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
               isActive: _skills.contains(SkillType.xd),
               skillType: SkillType.xd,
               onTap: () {
-                updateSelectedListSkill(SkillType.xd);
+                _updateSelectedListSkill(SkillType.xd);
               },
             ),
             SkillWidget(
@@ -156,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
               isActive: _skills.contains(SkillType.illustrator),
               skillType: SkillType.illustrator,
               onTap: () {
-                updateSelectedListSkill(SkillType.illustrator);
+                _updateSelectedListSkill(SkillType.illustrator);
               },
             ),
             SkillWidget(
@@ -166,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
               isActive: _skills.contains(SkillType.afterEffect),
               skillType: SkillType.afterEffect,
               onTap: () {
-                updateSelectedListSkill(SkillType.afterEffect);
+                _updateSelectedListSkill(SkillType.afterEffect);
               },
             ),
             SkillWidget(
@@ -176,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
               isActive: _skills.contains(SkillType.lightRoom),
               skillType: SkillType.lightRoom,
               onTap: () {
-                updateSelectedListSkill(SkillType.lightRoom);
+                _updateSelectedListSkill(SkillType.lightRoom);
               },
             ),
           ],
@@ -193,18 +206,19 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Personal information',
+            appLocalizations.personalInformation,
             style: themeData.textTheme.bodyText2!
                 .copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 16,
           ),
-          _buildTextField(label: 'Email', icon: Icons.alternate_email),
+          _buildTextField(
+              label: appLocalizations.email, icon: Icons.alternate_email),
           const SizedBox(
             height: 8,
           ),
-          _buildTextField(label: 'Password', icon: Icons.lock),
+          _buildTextField(label: appLocalizations.password, icon: Icons.lock),
           const SizedBox(
             height: 12,
           ),
@@ -213,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   minimumSize:
                       MaterialStateProperty.all(const Size.fromHeight(55))),
               onPressed: () {},
-              child: const Text('Save'))
+              child: Text(appLocalizations.save))
         ],
       ),
     );
@@ -235,6 +249,28 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             _buildInfoWidget(themeData, appLocalizations),
+            const Divider(),
+            Padding(
+              padding:
+                  const EdgeInsets.fromLTRB(bodyMargin, 12, bodyMargin, 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(appLocalizations.selectedLanguage),
+                  CupertinoSegmentedControl<Language>(
+                      selectedColor: themeData.primaryColor,
+                      borderColor: Colors.transparent,
+                      children: {
+                        Language.en: Text(appLocalizations.enLanguage),
+                        Language.fa: Text(appLocalizations.faLanguage)
+                      },
+                      groupValue: _language,
+                      onValueChanged: (value) {
+                        _updatedSelectedLanguage(value);
+                      })
+                ],
+              ),
+            ),
             _buildSkillsWidget(themeData, appLocalizations),
             _buildLoginWidget(themeData, appLocalizations)
           ],
@@ -245,3 +281,5 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 enum SkillType { photoShop, xd, illustrator, afterEffect, lightRoom }
+
+enum Language { en, fa }

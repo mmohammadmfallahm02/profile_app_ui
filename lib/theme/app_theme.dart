@@ -36,6 +36,8 @@ class MyAppThemeConfig {
         appBarTheme: AppBarTheme(
             backgroundColor: appBarColor, foregroundColor: primaryTextColor),
         inputDecorationTheme: InputDecorationTheme(
+          labelStyle:
+              const TextStyle(fontWeight: FontWeight.normal, fontSize: 14),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide.none),
@@ -66,16 +68,20 @@ class MyAppThemeConfig {
       headline6: TextStyle(
           fontWeight: FontWeight.bold,
           color: primaryTextColor,
-          fontFamily: faFontFamilyName),
+          fontFamily: faFontFamilyName,
+          fontSize: 18),
+      caption: const TextStyle(fontFamily: faFontFamilyName),
       bodyText2: TextStyle(
           fontSize: 14, color: primaryTextColor, fontFamily: faFontFamilyName),
       bodyText1: TextStyle(
           fontSize: 13,
           color: secondaryTextColor,
-          fontFamily: faFontFamilyName),
+          fontFamily: faFontFamilyName,
+          height: 1.5),
       subtitle1: TextStyle(
           fontWeight: FontWeight.w900,
-          fontSize: 16,
+          fontSize: 15,
           color: primaryTextColor,
-          fontFamily: faFontFamilyName));
+          fontFamily: faFontFamilyName),
+      button: const TextStyle(fontFamily: faFontFamilyName));
 }

@@ -17,6 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   ThemeMode themeMode = ThemeMode.dark;
+  Locale locale = const Locale('en');
   @override
   Widget build(BuildContext context) {
     // const Color surfaceColor = Color(0x0dffffff);
@@ -25,16 +26,16 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: themeMode == ThemeMode.light
-          ? MyAppThemeConfig.light().getTheme('fa')
-          : MyAppThemeConfig.dark().getTheme('fa'),
-          locale: const Locale('fa'),
+          ? MyAppThemeConfig.light().getTheme(locale.languageCode)
+          : MyAppThemeConfig.dark().getTheme(locale.languageCode),
+      locale: locale,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales:AppLocalizations.supportedLocales ,
+      supportedLocales: AppLocalizations.supportedLocales,
       home: HomeScreen(
         toggleThemeMode: () {
           setState(() {
@@ -42,6 +43,13 @@ class _MyAppState extends State<MyApp> {
                 ? themeMode = ThemeMode.dark
                 : themeMode = ThemeMode.light;
           });
+        },
+        selectedLanguageChanged: (Language language) {
+          locale =
+              language == Language.en ? const Locale('en') : const Locale('fa');
+              setState(() {
+                
+              });
         },
       ),
     );
