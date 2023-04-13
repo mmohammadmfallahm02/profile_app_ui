@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final Function() toggleThemeMode;
+  const HomeScreen({super.key, required this.toggleThemeMode});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -21,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return AppBar(
       title: const Text('Curriculum Vitae'),
       actions: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.light_mode)),
+        IconButton(onPressed: widget.toggleThemeMode, icon: const Icon(Icons.light_mode)),
         const Icon(Icons.more_vert),
         const SizedBox(
           width: 16,
