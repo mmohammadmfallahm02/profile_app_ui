@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyAppThemeConfig {
-  // const Color surfaceColor = Color(0x0dffffff);
+  static const String faFontFamilyName = 'IranYekan';
   final Color primaryColor = Colors.pink.shade400;
   final Color primaryTextColor;
   final Color secondaryTextColor;
@@ -27,27 +27,31 @@ class MyAppThemeConfig {
         appBarColor = Colors.black,
         brightness = Brightness.dark;
 
-  ThemeData getTheme() {
+  ThemeData getTheme(String languageCode) {
     return ThemeData(
-      brightness: brightness,
-      primaryColor: primaryColor,
-      scaffoldBackgroundColor: backgroundColor,
-      dividerColor: surfaceColor,
-      appBarTheme: AppBarTheme(
-          backgroundColor: appBarColor, foregroundColor: primaryTextColor),
-      inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide.none),
-        filled: true,
-        fillColor: surfaceColor,
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(primaryColor),
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8))))),
-      textTheme: GoogleFonts.latoTextTheme(
+        brightness: brightness,
+        primaryColor: primaryColor,
+        scaffoldBackgroundColor: backgroundColor,
+        dividerColor: surfaceColor,
+        appBarTheme: AppBarTheme(
+            backgroundColor: appBarColor, foregroundColor: primaryTextColor),
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none),
+          filled: true,
+          fillColor: surfaceColor,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(primaryColor),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8))))),
+        textTheme:
+            languageCode == 'fa' ? faPrimaryTextThem : enPrimaryTextTheme);
+  }
+
+  TextTheme get enPrimaryTextTheme => GoogleFonts.latoTextTheme(
         TextTheme(
             headline6:
                 TextStyle(fontWeight: FontWeight.bold, color: primaryTextColor),
@@ -57,7 +61,21 @@ class MyAppThemeConfig {
                 fontWeight: FontWeight.w900,
                 fontSize: 16,
                 color: primaryTextColor)),
-      ),
-    );
-  }
+      );
+  TextTheme get faPrimaryTextThem => TextTheme(
+      headline6: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: primaryTextColor,
+          fontFamily: faFontFamilyName),
+      bodyText2: TextStyle(
+          fontSize: 14, color: primaryTextColor, fontFamily: faFontFamilyName),
+      bodyText1: TextStyle(
+          fontSize: 13,
+          color: secondaryTextColor,
+          fontFamily: faFontFamilyName),
+      subtitle1: TextStyle(
+          fontWeight: FontWeight.w900,
+          fontSize: 16,
+          color: primaryTextColor,
+          fontFamily: faFontFamilyName));
 }

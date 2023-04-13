@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../widgets/widgets.dart';
 
@@ -20,9 +21,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AppBar _buildAppBarWidget() {
     return AppBar(
-      title: const Text('Curriculum Vitae'),
+      title: Text(AppLocalizations.of(context)!.profileTitle),
       actions: [
-        IconButton(onPressed: widget.toggleThemeMode, icon: const Icon(Icons.light_mode)),
+        IconButton(
+            onPressed: widget.toggleThemeMode,
+            icon: const Icon(Icons.light_mode)),
         const Icon(Icons.more_vert),
         const SizedBox(
           width: 16,
@@ -31,7 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildInfoWidget(ThemeData themeData) {
+  Widget _buildInfoWidget(
+      ThemeData themeData, AppLocalizations appLocalizations) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(bodyMargin, 40, bodyMargin, 30),
       child: Column(
@@ -54,13 +58,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Brice Séraphin',
+                      appLocalizations.name,
                       style: themeData.textTheme.subtitle1,
                     ),
                     const SizedBox(
                       height: 2,
                     ),
-                    const Text('Product& Product Designer'),
+                    Text(appLocalizations.job),
                     const SizedBox(
                       height: 8,
                     ),
@@ -75,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 2,
                         ),
                         Text(
-                          'Paris, France',
+                          appLocalizations.location,
                           style: themeData.textTheme.caption,
                         )
                       ],
@@ -90,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 32,
           ),
           Text(
-            'Enthusiastic young computer Geek, Freelance Designer in love of independence, I have alot of experience in graphical projects, and always give the best of myself to bring you to success.',
+            appLocalizations.summary,
             style: themeData.textTheme.bodyText1,
           )
         ],
@@ -98,7 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildSkillsWidget(ThemeData themeData) {
+  Widget _buildSkillsWidget(
+      ThemeData themeData, AppLocalizations appLocalizations) {
     return ExpansionTile(
       trailing: const SizedBox(),
       tilePadding: const EdgeInsets.only(left: bodyMargin, right: bodyMargin),
@@ -180,9 +185,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildLoginWidget(ThemeData themeData) {
+  Widget _buildLoginWidget(
+      ThemeData themeData, AppLocalizations appLocalizations) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(bodyMargin, 20, bodyMargin, 20),
+      padding: const EdgeInsets.fromLTRB(bodyMargin, 20, bodyMargin, 40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -222,14 +228,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
+    final AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: _buildAppBarWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _buildInfoWidget(themeData),
-            _buildSkillsWidget(themeData),
-            _buildLoginWidget(themeData)
+            _buildInfoWidget(themeData, appLocalizations),
+            _buildSkillsWidget(themeData, appLocalizations),
+            _buildLoginWidget(themeData, appLocalizations)
           ],
         ),
       ),
